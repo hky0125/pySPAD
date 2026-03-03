@@ -486,7 +486,6 @@ class SPAD512S:
         else:
             self.t.settimeout(None)  # Remove the timeout
     
-        #time.sleep(0.2)
 
         data = bytearray()
         
