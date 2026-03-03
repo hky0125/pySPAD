@@ -497,7 +497,7 @@ class SPAD512S:
 
                 if datablock[-4:] == bytearray("DONE", 'utf8'):
 
-                    print("Process complete")
+                    #print("Process complete")
                     break
 
                 elif datablock[-5:] == bytearray("ERROR", 'utf8'):
