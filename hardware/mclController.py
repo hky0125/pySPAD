@@ -8,11 +8,11 @@ Hazen 3/09
 import ctypes
 import time
 
-import storm_control.sc_library.halExceptions as halExceptions
+#import storm_control.sc_library.halExceptions as halExceptions
 
 
-class MCLException(halExceptions.HardwareException):
-    pass
+#class MCLException(halExceptions.HardwareException):
+#    pass
 
 
 class ProductInformation(ctypes.Structure):
@@ -85,8 +85,8 @@ class MCLStage(object):
 
         # Get the stage information.
         caps = ProductInformation(0, 0, 0, 0, 0, 0)
-        if (mcl.MCL_GetProductInfo(ctypes.byref(caps), self.handle) != 0):
-            raise MCLException("MCL_GetProductInfo failed.")
+        #if (mcl.MCL_GetProductInfo(ctypes.byref(caps), self.handle) != 0):
+        #    raise MCLException("MCL_GetProductInfo failed.")
         self._props_ = {"axis_bitmap" : caps.axis_bitmap,
                         "ADC_resolution" : caps.ADC_resolution,
                         "DAC_resolution" : caps.DAC_resolution,
