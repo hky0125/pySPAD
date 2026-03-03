@@ -13,7 +13,7 @@ class pySPADutils:
     from pySPADutils import pySPADutils as util
 
     Last update: 
-    2024-06-10 by Keyi Han
+    2026-03-03 by Keyi Han
     '''
     
     '''
