@@ -57,11 +57,12 @@ class pySPADutils:
 
     @staticmethod
     def writeTiffBig(file_path, img, compression_mode="zlib"):
-        # img shape: (H, W, Z), values 0/1
-        stack = np.transpose(img.astype(np.uint8), (2, 0, 1))  # (Z,H,W)
+        # img shape: (Z, H, W), values 0/1
+        img = np.transpose(img.astype(np.uint16), (2, 0, 1))  # (Z,H,W)
+        ### img = img.astype(np.uint8)
         tiff.imwrite(
             file_path,
-            stack,
+            img,
             photometric="minisblack",
             compression=compression_mode,
             metadata={"axes": "ZYX"},
