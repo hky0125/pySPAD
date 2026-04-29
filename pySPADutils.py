@@ -16,9 +16,7 @@ class pySPADutils:
     2026-03-03 by Keyi Han
     '''
     
-    '''
-             ------------ I/O functions ------------
-    ''' 
+
     @staticmethod
     def readBinBig(file_path):
         with open(file_path, "rb") as f:
@@ -56,22 +54,19 @@ class pySPADutils:
 
 
     @staticmethod
-    def writeTiffBig(file_path, img, compression_mode="zlib"):
+    def writeTiffBig(file_path, img, compression_mode="zlib", dtype="uint16"):
+        
         # img shape: (Z, H, W), values 0/1
-        img = np.transpose(img.astype(np.uint16), (2, 0, 1))  # (Z,H,W)
-        ### img = img.astype(np.uint8)
+
         tiff.imwrite(
             file_path,
-            img,
+            img.astype(getattr(np, dtype)),
             photometric="minisblack",
             compression=compression_mode,
             metadata={"axes": "ZYX"},
         )
 
 
-    '''
-             ------------ Processing functions ------------
-    ''' 
     @staticmethod
     def unpackBytearray(data,H=512, W=512, footer_bytes=4):
 
@@ -91,13 +86,8 @@ class pySPADutils:
 
 
         # unpack all frames at once -> (frames, bytes_per_frame*8) = (frames, 262144)
-        # reshape to (frames, H, W)
+        # reshape to (frames, H, W) which is ZYX
         bits = np.unpackbits(u8, axis=1).reshape(n_frames, H, W)
 
-        # rot90(databit.reshape((512,512))) per frame in vectorized:
-        bits = np.transpose(bits, (0, 2, 1))[:, ::-1, :]
 
-        # put into img shaped (H, W, frames)
-        img = np.transpose(bits, (1, 2, 0)).astype(np.uint8, copy=False)
-
-        return img
+        return bits.astype(np.uint8, copy=False)
